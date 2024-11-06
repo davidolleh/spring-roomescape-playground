@@ -28,7 +28,7 @@ public record ReservationRequestDto(
                 .anyMatch(String::isBlank);
 
         if (isBlankExists) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("요청 인자의 값을 빈값일 수 없습니다");
         }
     }
 
