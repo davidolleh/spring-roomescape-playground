@@ -2,8 +2,10 @@ package roomescape.api;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
-import roomescape.api.dto.ReservationResponse;
+import roomescape.api.dto.ReservationDto;
 import roomescape.repository.ReservationRepositoryImpl;
 import roomescape.service.ReservationService;
 
@@ -25,9 +27,17 @@ public class ReservationController {
 
     @GetMapping("/reservations")
     @ResponseBody
-    public List<ReservationResponse> readReservations() {
+    public List<ReservationDto> readReservations() {
         return reservationService.readReservations().stream().
-                map(ReservationResponse::fromEntity)
+                map(ReservationDto::fromEntity)
                 .toList();
+    }
+
+    @PostMapping("/reservations")
+    @ResponseBody
+    public ReservationDto createReservation(@RequestBody ReservationDto reservationDto) {
+        return ReservationDto.fromEntity(
+                reservationService.createReservation(reservationDto.toEntity())
+        );
     }
 }

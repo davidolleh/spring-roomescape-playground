@@ -11,10 +11,12 @@ public class Reservation implements  Comparable<Reservation> {
 
     public Reservation(Long id, Person person, LocalDate date, LocalTime time) {
         this.id = id;
-        if (id == null) {
-            this.id = 0L;
-        }
-
+        this.person = person;
+        this.date = date;
+        this.time = time;
+    }
+    public Reservation(Person person, LocalDate date, LocalTime time) {
+        this.id = 0L;
         this.person = person;
         this.date = date;
         this.time = time;
