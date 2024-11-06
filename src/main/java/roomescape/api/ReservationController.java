@@ -22,7 +22,6 @@ public class ReservationController {
 
     @GetMapping("/reservation")
     public String reservationPage() {
-//        throw new IllegalArgumentException();
         return "reservation";
     }
 
