@@ -13,7 +13,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 public class ReservationRepositoryImpl implements ReservationRepository {
     private final Map<Long, Reservation> reservations;
-    private AtomicLong id = new AtomicLong(1);
+    private final AtomicLong id = new AtomicLong(1);
 
     public ReservationRepositoryImpl() {
         reservations = initialReservationsSetting();
