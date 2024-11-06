@@ -1,4 +1,4 @@
-package roomescape.api.dto;
+package roomescape.util;
 
 public class DateTimeFormat {
     public static final String dateFormat = "yyyy-MM-dd";
