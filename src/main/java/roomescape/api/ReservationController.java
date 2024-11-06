@@ -41,13 +41,13 @@ public class ReservationController {
     @PostMapping("/reservations")
     @ResponseBody
     public ResponseEntity<ReservationResponseDto> createReservation(@RequestBody ReservationRequestDto reservationDto) {
+        ReservationResponseDto response =
+                ReservationResponseDto.fromEntity(reservationService.createReservation(reservationDto.toEntity()));
+
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(
-                        ReservationResponseDto.fromEntity(
-                                reservationService.createReservation(reservationDto.toEntity())
-                        )
-                );
+                .header("Location", "/reservations/"+ response.id())
+                .body(response);
     }
 
     @DeleteMapping("/reservations/{id}")
