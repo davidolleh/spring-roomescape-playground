@@ -2,6 +2,7 @@ package roomescape.repository;
 
 import roomescape.entity.Person;
 import roomescape.entity.Reservation;
+import roomescape.exception.EntityNotFoundException;
 import roomescape.service.ReservationRepository;
 
 import java.time.LocalDate;
@@ -22,19 +23,19 @@ public class ReservationRepositoryImpl implements ReservationRepository {
     private Map<Long, Reservation> initialReservationsSetting() {
         Person person = new Person("brown");
         Reservation reservation1 = new Reservation(
-                1L,
+                id.getAndIncrement(),
                 person,
                 LocalDate.of(2023,1,1),
                 LocalTime.of(10, 0,0)
         );
         Reservation reservation2 = new Reservation(
-                2L,
+                id.getAndIncrement(),
                 person,
                 LocalDate.of(2023,1,2),
                 LocalTime.of(11, 0,0)
         );
         Reservation reservation3 = new Reservation(
-                3L,
+                id.getAndIncrement(),
                 person,
                 LocalDate.of(2023,1,3),
                 LocalTime.of(12, 0,0)
@@ -50,10 +51,10 @@ public class ReservationRepositoryImpl implements ReservationRepository {
 
     @Override
     public Reservation save(Reservation reservation) {
-        reservation.setId(id.get());
-        reservations.put(id.get(), reservation);
+        Long newId = id.getAndIncrement();
 
-        id.incrementAndGet();
+        reservation.setId(newId);
+        reservations.put(reservation.getId(), reservation);
 
         return reservation;
     }
@@ -73,6 +74,9 @@ public class ReservationRepositoryImpl implements ReservationRepository {
 
     @Override
     public void deleteById(Long id) {
+        if (!reservations.containsKey(id)) {
+            throw new EntityNotFoundException("예약이 존재하지 않습니다");
+        }
         reservations.remove(id);
     }
 }
