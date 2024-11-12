@@ -1,12 +1,15 @@
 package roomescape.repository;
 
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import roomescape.entity.Person;
 import roomescape.entity.Reservation;
 import roomescape.service.ReservationRepository;
 import roomescape.util.CustomDateTimeFormat;
 
+import java.sql.PreparedStatement;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -22,7 +25,23 @@ public class JDBCReservationRepositoryImpl implements ReservationRepository {
 
     @Override
     public Reservation save(Reservation reservation) {
-        return null;
+        String query = "insert into RESERVATION (name, date, time) values (?, ?, ?)";
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+
+        jdbcTemplate.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(
+                    query,
+                    new String[]{"id"});
+            ps.setString(1, reservation.getPerson().getName());
+            ps.setString(2, reservation.getDate().format(CustomDateTimeFormat.dateFormatter));
+            ps.setString(3, reservation.getTime().format(CustomDateTimeFormat.timeFormatter));
+            return ps;
+        }, keyHolder);
+
+        Long id = keyHolder.getKey().longValue();
+
+        reservation.setId(id);
+        return reservation;
     }
 
     @Override
@@ -51,6 +70,7 @@ public class JDBCReservationRepositoryImpl implements ReservationRepository {
 
     @Override
     public void deleteById(Long id) {
-
+        String query = "delete from RESERVATION where id = ?";
+        jdbcTemplate.update(query, id);
     }
 }
