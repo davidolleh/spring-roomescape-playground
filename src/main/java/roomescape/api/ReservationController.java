@@ -6,7 +6,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import roomescape.api.dto.ReservationRequestDto;
 import roomescape.api.dto.ReservationResponseDto;
-import roomescape.repository.ReservationRepositoryImpl;
 import roomescape.service.ReservationService;
 
 import java.util.List;
@@ -16,8 +15,8 @@ public class ReservationController {
 
     private final ReservationService reservationService;
 
-    public ReservationController() {
-        this.reservationService = new ReservationService(new ReservationRepositoryImpl());
+    public ReservationController(ReservationService reservationService) {
+        this.reservationService = reservationService;
     }
 
     @GetMapping("/reservation")

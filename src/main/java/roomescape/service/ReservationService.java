@@ -1,14 +1,16 @@
 package roomescape.service;
 
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 import roomescape.entity.Reservation;
-import roomescape.repository.ReservationRepositoryImpl;
 
 import java.util.List;
 
+@Service
 public class ReservationService {
-    private final ReservationRepositoryImpl reservationRepository;
+    private final ReservationRepository reservationRepository;
 
-    public ReservationService(ReservationRepositoryImpl reservationRepository) {
+    public ReservationService(@Qualifier("JDBCReservationRepositoryImpl") ReservationRepository reservationRepository) {
         this.reservationRepository = reservationRepository;
     }
 
