@@ -12,11 +12,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
-public class ReservationRepositoryImpl implements ReservationRepository {
+public class InMemoryReservationRepositoryImpl implements ReservationRepository {
     private final Map<Long, Reservation> reservations;
     private final AtomicLong id = new AtomicLong(1);
 
-    public ReservationRepositoryImpl() {
+    public InMemoryReservationRepositoryImpl() {
         reservations = initialReservationsSetting();
     }
 
