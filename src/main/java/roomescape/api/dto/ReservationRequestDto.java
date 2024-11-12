@@ -2,11 +2,10 @@ package roomescape.api.dto;
 
 import roomescape.entity.Person;
 import roomescape.entity.Reservation;
-import roomescape.util.DateTimeFormat;
+import roomescape.util.CustomDateTimeFormat;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 
 public record ReservationRequestDto(
@@ -36,8 +35,8 @@ public record ReservationRequestDto(
     public Reservation toEntity() {
         return new Reservation(
             new Person(this.name),
-            LocalDate.parse(date, DateTimeFormatter.ofPattern(DateTimeFormat.dateFormat)),
-            LocalTime.parse(time, DateTimeFormatter.ofPattern(DateTimeFormat.timeFormat))
+            LocalDate.parse(date, CustomDateTimeFormat.dateFormatter),
+            LocalTime.parse(time, CustomDateTimeFormat.timeFormatter)
         );
     }
 }
