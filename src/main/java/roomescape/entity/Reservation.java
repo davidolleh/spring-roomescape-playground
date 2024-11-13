@@ -2,6 +2,7 @@ package roomescape.entity;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Objects;
 
 public class Reservation implements  Comparable<Reservation> {
     private Long id;
@@ -41,5 +42,18 @@ public class Reservation implements  Comparable<Reservation> {
 
     public LocalTime getTime() {
         return time;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Reservation that = (Reservation) o;
+        return Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id);
     }
 }
