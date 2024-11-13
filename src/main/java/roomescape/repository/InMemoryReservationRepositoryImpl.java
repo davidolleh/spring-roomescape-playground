@@ -53,10 +53,15 @@ public class InMemoryReservationRepositoryImpl implements ReservationRepository 
     public Reservation save(Reservation reservation) {
         Long newId = id.getAndIncrement();
 
-        reservation.setId(newId);
-        reservations.put(reservation.getId(), reservation);
+        Reservation reservationWithId = new Reservation(
+                newId,
+                reservation.getPerson(),
+                reservation.getDate(),
+                reservation.getTime()
+        );
+        reservations.put(reservation.getId(), reservationWithId);
 
-        return reservation;
+        return reservationWithId;
     }
 
     @Override

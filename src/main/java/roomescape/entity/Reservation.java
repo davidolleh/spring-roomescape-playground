@@ -27,10 +27,6 @@ public class Reservation implements  Comparable<Reservation> {
         return (int) (this.id - o.id);
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public Long getId() {
         return id;
     }

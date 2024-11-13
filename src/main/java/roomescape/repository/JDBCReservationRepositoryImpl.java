@@ -33,7 +33,7 @@ public class JDBCReservationRepositoryImpl implements ReservationRepository {
 
     @Override
     public Reservation save(Reservation reservation) {
-        String query = "insert into RESERVATION (name, date, time) values (?, ?, ?)";
+        String query = "INSERT INTO RESERVATION (name, date, time) VALUES (?, ?, ?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
         jdbcTemplate.update(connection -> {
@@ -48,8 +48,12 @@ public class JDBCReservationRepositoryImpl implements ReservationRepository {
 
         Long id = keyHolder.getKey().longValue();
 
-        reservation.setId(id);
-        return reservation;
+        return new Reservation(
+                id,
+                reservation.getPerson(),
+                reservation.getDate(),
+                reservation.getTime()
+        );
     }
 
     @Override
