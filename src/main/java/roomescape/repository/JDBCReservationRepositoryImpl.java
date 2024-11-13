@@ -7,6 +7,7 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import roomescape.entity.Person;
 import roomescape.entity.Reservation;
+import roomescape.exception.EntityNotFoundException;
 import roomescape.service.ReservationRepository;
 import roomescape.util.CustomDateTimeFormat;
 
@@ -68,6 +69,10 @@ public class JDBCReservationRepositoryImpl implements ReservationRepository {
     @Override
     public void deleteById(Long id) {
         String query = "delete from RESERVATION where id = ?";
-        jdbcTemplate.update(query, id);
+        int count = jdbcTemplate.update(query, id);
+
+        if (count == 0) {
+            throw new EntityNotFoundException("해당 예약은 존재하지 않스빈다");
+        }
     }
 }
