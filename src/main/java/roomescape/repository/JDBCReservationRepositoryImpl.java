@@ -1,6 +1,7 @@
 package roomescape.repository;
 
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
@@ -18,6 +19,12 @@ import java.util.List;
 public class JDBCReservationRepositoryImpl implements ReservationRepository {
 
     private final JdbcTemplate jdbcTemplate;
+    private final RowMapper<Reservation> reservationRowMapper = (rs, rowNum) -> new Reservation(
+            rs.getLong("id"),
+            new Person(rs.getString("name")),
+            LocalDate.parse(rs.getString("date"), CustomDateTimeFormat.dateFormatter),
+            LocalTime.parse(rs.getString("time"), CustomDateTimeFormat.timeFormatter)
+    );
 
     public JDBCReservationRepositoryImpl(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -48,24 +55,14 @@ public class JDBCReservationRepositoryImpl implements ReservationRepository {
     public List<Reservation> findAll() {
         String query = "SELECT * FROM RESERVATION";
 
-        return jdbcTemplate.query(query, (rs, rowNum) -> new Reservation(
-                rs.getLong("id"),
-                new Person(rs.getString("name")),
-                LocalDate.parse(rs.getString("date"), CustomDateTimeFormat.dateFormatter),
-                LocalTime.parse(rs.getString("time"), CustomDateTimeFormat.timeFormatter)
-        ));
+        return jdbcTemplate.query(query, reservationRowMapper);
     }
 
     @Override
     public Reservation findById(Long id) {
         String query = "SELECT * FROM RESERVATION WHERE id = ?";
 
-        return jdbcTemplate.queryForObject(query, (rs, rowNum) -> new Reservation(
-                rs.getLong("id"),
-                new Person(rs.getString("name")),
-                LocalDate.parse(rs.getString("date"), CustomDateTimeFormat.dateFormatter),
-                LocalTime.parse(rs.getString("time"), CustomDateTimeFormat.timeFormatter)
-        ), id);
+        return jdbcTemplate.queryForObject(query, reservationRowMapper, id);
     }
 
     @Override
