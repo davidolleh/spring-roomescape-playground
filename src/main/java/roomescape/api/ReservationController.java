@@ -11,7 +11,7 @@ import roomescape.service.ReservationService;
 
 import java.util.List;
 
-@Controller
+@RestController
 public class ReservationController {
 
     private final ReservationService reservationService;
@@ -20,13 +20,7 @@ public class ReservationController {
         this.reservationService = new ReservationService(new ReservationRepositoryImpl());
     }
 
-    @GetMapping("/reservation")
-    public String reservationPage() {
-        return "reservation";
-    }
-
     @GetMapping("/reservations")
-    @ResponseBody
     public ResponseEntity<List<ReservationResponseDto>> readReservations() {
         return ResponseEntity
                 .status(HttpStatus.OK)
@@ -38,7 +32,6 @@ public class ReservationController {
     }
 
     @PostMapping("/reservations")
-    @ResponseBody
     public ResponseEntity<ReservationResponseDto> createReservation(@RequestBody ReservationRequestDto reservationDto) {
         ReservationResponseDto response =
                 ReservationResponseDto.fromEntity(reservationService.createReservation(reservationDto.toEntity()));
