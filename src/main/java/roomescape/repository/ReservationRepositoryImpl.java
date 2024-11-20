@@ -54,7 +54,7 @@ public class ReservationRepositoryImpl implements ReservationRepository {
         Long newId = id.getAndIncrement();
 
         reservation.setId(newId);
-        reservations.put(reservation.getId(), reservation);
+        reservations.put(newId, reservation);
 
         return reservation;
     }
