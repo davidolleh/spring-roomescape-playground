@@ -8,7 +8,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import roomescape.api.dto.ReservationRequestDto;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import static org.hamcrest.core.Is.is;
@@ -48,12 +47,6 @@ public class MissionStepTest {
 
     @Nested
     class 삼단계 {
-        ReservationRequestDto requestBody = new ReservationRequestDto(
-                "hwang",
-                "2024-11-06",
-                "10:11"
-        );
-
         Map<String, String> params = Map.of(
                 "name", "브라운",
                 "date", "2023-08-05",
