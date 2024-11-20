@@ -42,7 +42,7 @@ public class ReservationRepositoryImpl implements ReservationRepository {
         );
 
 
-        return new HashMap<Long, Reservation>() {{
+        return new HashMap<>() {{
             put(reservation1.getId(), reservation1);
             put(reservation2.getId(), reservation2);
             put(reservation3.getId(), reservation3);
