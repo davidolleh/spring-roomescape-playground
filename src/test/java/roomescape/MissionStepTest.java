@@ -42,7 +42,7 @@ public class MissionStepTest {
                     .when().get("/reservations")
                     .then().log().all()
                     .statusCode(200)
-                    .body("size()", is(3));
+                    .body("size()", is(0));
         }
     }
 
@@ -62,18 +62,27 @@ public class MissionStepTest {
                     .when().post("/reservations")
                     .then().log().all()
                     .statusCode(201)
-                    .header("Location", "/reservations/4")
-                    .body("id", is(4));
+                    .header("Location", "/reservations/1")
+                    .body("id", is(1));
 
             RestAssured.given().log().all()
                     .when().get("/reservations")
                     .then().log().all()
                     .statusCode(200)
-                    .body("size()", is(4));
+                    .body("size()", is(1));
         }
 
         @Test
         void 예약_삭제_요청() {
+            RestAssured.given().log().all()
+                    .contentType(ContentType.JSON)
+                    .body(requestBody)
+                    .when().post("/reservations")
+                    .then().log().all()
+                    .statusCode(201)
+                    .header("Location", "/reservations/1")
+                    .body("id", is(1));
+
             RestAssured.given().log().all()
                     .when().delete("/reservations/1")
                     .then().log().all()
@@ -83,7 +92,7 @@ public class MissionStepTest {
                     .when().get("/reservations")
                     .then().log().all()
                     .statusCode(200)
-                    .body("size()", is(2));
+                    .body("size()", is(0));
         }
     }
 
