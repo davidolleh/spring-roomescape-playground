@@ -21,7 +21,7 @@ public class ReservationController {
     @GetMapping("/reservations")
     public ResponseEntity<List<ReservationResponseDto>> readReservations() {
         return ResponseEntity
-                .status(HttpStatus.OK)
+                .ok()
                 .body(
                         reservationService.readReservations().stream().
                                 map(ReservationResponseDto::fromEntity)
