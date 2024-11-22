@@ -7,6 +7,7 @@ import roomescape.service.ReservationRepository;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -68,7 +69,7 @@ public class InMemoryReservationRepositoryImpl implements ReservationRepository 
     public List<Reservation> findAll() {
         return reservations.values()
                 .stream()
-                .sorted()
+                .sorted(Comparator.comparing(Reservation::getId).reversed())
                 .toList();
     }
 
