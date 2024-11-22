@@ -1,7 +1,9 @@
 package roomescape.api;
 
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import roomescape.api.dto.ReservationRequestDto;
 import roomescape.api.dto.ReservationResponseDto;
@@ -30,7 +32,9 @@ public class ReservationController {
     }
 
     @PostMapping("/reservations")
-    public ResponseEntity<ReservationResponseDto> createReservation(@RequestBody ReservationRequestDto reservationDto) {
+    public ResponseEntity<ReservationResponseDto> createReservation(
+            @RequestBody @Valid ReservationRequestDto reservationDto
+    ) {
         ReservationResponseDto response =
                 ReservationResponseDto.fromEntity(reservationService.createReservation(reservationDto.toEntity()));
 
