@@ -17,7 +17,7 @@ import java.time.LocalTime;
 import java.util.List;
 
 @Repository
-public class JDBCReservationRepositoryImpl implements ReservationRepository {
+public class JDBCReservationDao implements ReservationRepository {
 
     private final JdbcTemplate jdbcTemplate;
     private final RowMapper<Reservation> reservationRowMapper = (rs, rowNum) -> new Reservation(
@@ -27,7 +27,7 @@ public class JDBCReservationRepositoryImpl implements ReservationRepository {
             LocalTime.parse(rs.getString("time"), CustomDateTimeFormat.timeFormatter)
     );
 
-    public JDBCReservationRepositoryImpl(JdbcTemplate jdbcTemplate) {
+    public JDBCReservationDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 

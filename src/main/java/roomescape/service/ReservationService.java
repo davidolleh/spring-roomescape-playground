@@ -10,7 +10,7 @@ import java.util.List;
 public class ReservationService {
     private final ReservationRepository reservationRepository;
 
-    public ReservationService(@Qualifier("JDBCReservationRepositoryImpl") ReservationRepository reservationRepository) {
+    public ReservationService(@Qualifier("JDBCReservationDao") ReservationRepository reservationRepository) {
         this.reservationRepository = reservationRepository;
     }
 
