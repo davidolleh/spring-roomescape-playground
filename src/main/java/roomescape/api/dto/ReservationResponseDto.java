@@ -9,6 +9,10 @@ public record ReservationResponseDto(
         String time
 ) {
     public static ReservationResponseDto fromEntity(Reservation reservation) {
+        if (reservation == null) {
+            return null;
+        }
+
         return new ReservationResponseDto(
                 reservation.getId(),
                 reservation.getPerson().getName(),

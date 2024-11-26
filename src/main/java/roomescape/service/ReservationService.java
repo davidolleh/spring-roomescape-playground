@@ -18,6 +18,10 @@ public class ReservationService {
         return reservationRepository.findAll();
     }
 
+    public Reservation readReservation(Long id) {
+        return reservationRepository.findById(id);
+    }
+
     public Reservation createReservation(Reservation reservation) {
         return reservationRepository.save(reservation);
     }
