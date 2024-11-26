@@ -15,4 +15,9 @@ public class StaticPageController {
     public String reservationPage() {
         return "reservation";
     }
+
+    @GetMapping("/time")
+    public String timesPage() {
+        return "time";
+    }
 }
