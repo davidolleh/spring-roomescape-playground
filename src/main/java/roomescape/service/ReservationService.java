@@ -12,15 +12,13 @@ import java.util.List;
 @Service
 public class ReservationService {
     private final ReservationDao reservationDao;
-    private final TimeDao reservationTimeDao;
     private final TimeDao timeDao;
 
     public ReservationService(
             @Autowired ReservationDao reservationRepository,
-            @Autowired TimeDao reservationTimeDao,
-            TimeDao timeDao) {
+            @Autowired TimeDao timeDao
+    ) {
         this.reservationDao = reservationRepository;
-        this.reservationTimeDao = reservationTimeDao;
         this.timeDao = timeDao;
     }
 
@@ -41,14 +39,14 @@ public class ReservationService {
     }
 
     public List<Time> readReservationTimes() {
-        return reservationTimeDao.findAll();
+        return timeDao.findAll();
     }
 
     public Time createReservationTime(roomescape.entity.Time reservationTime) {
-        return reservationTimeDao.save(reservationTime);
+        return timeDao.save(reservationTime);
     }
 
     public void deleteReservationTime(Long id) {
-        reservationTimeDao.delete(id);
+        timeDao.delete(id);
     }
 }
