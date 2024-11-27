@@ -26,6 +26,13 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(e.getMessage());
     }
 
+    @ExceptionHandler(EntityAlreadyExistException.class)
+    public ResponseEntity<String> handleIllegalArgumentException(EntityAlreadyExistException e) {
+        logger.error(e.getMessage());
+        logger.error(e.getClass().getName());
+        return ResponseEntity.badRequest().body(e.getMessage());
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<String> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
         logger.error(e.getMessage());

@@ -18,16 +18,13 @@ public record ReservationRequestDto(
         @NotNull
         String date,
         @NotNull
-        Long timeId,
-        @NotBlank
-        @NotNull
-        String time
+        Long time
 ) {
     public Reservation toEntity() {
         return new Reservation(
             new Person(this.name),
             LocalDate.parse(date, CustomDateTimeFormat.dateFormatter),
-            new Time(timeId, LocalTime.parse(time, CustomDateTimeFormat.timeFormatter))
+            new Time(time)
         );
     }
 }

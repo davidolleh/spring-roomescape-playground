@@ -6,7 +6,7 @@ public record ReservationResponseDto(
         Long id,
         String name,
         String date,
-        String time
+        TimeResponseDto time
 ) {
     public static ReservationResponseDto fromEntity(Reservation reservation) {
         if (reservation == null) {
@@ -17,7 +17,7 @@ public record ReservationResponseDto(
                 reservation.getId(),
                 reservation.getPerson().getName(),
                 reservation.getDate().format(CustomDateTimeFormat.dateFormatter),
-                reservation.getLocalTime().format(CustomDateTimeFormat.timeFormatter)
+                TimeResponseDto.fromEntity(reservation.getTime())
         );
     }
 }

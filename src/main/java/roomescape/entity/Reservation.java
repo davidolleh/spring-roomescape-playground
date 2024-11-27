@@ -1,7 +1,6 @@
 package roomescape.entity;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.Objects;
 
 public class Reservation {
@@ -45,10 +44,6 @@ public class Reservation {
 
     public Long getTimeId() {
         return time.getId();
-    }
-
-    public LocalTime getLocalTime() {
-        return time.getTime();
     }
 
     @Override
