@@ -23,13 +23,20 @@ public class ReservationDao {
 
     @Autowired
     private final JdbcTemplate jdbcTemplate;
-    private final RowMapper<Reservation> reservationRowMapper = (rs, rowNum) ->
+    private final RowMapper<Reservation> reservationTimeRowMapper = (rs, rowNum) ->
        new Reservation(
             rs.getLong(1),
             new Person(rs.getString(2)),
             LocalDate.parse(rs.getString(3), CustomDateTimeFormat.dateFormatter),
             new Time(rs.getLong(4), LocalTime.parse(rs.getString(5), CustomDateTimeFormat.timeFormatter))
     );
+    private final RowMapper<Reservation> reservationRowMapper = (rs, rowNum) ->
+            new Reservation(
+                    rs.getLong(1),
+                    new Person(rs.getString(2)),
+                    LocalDate.parse(rs.getString(3), CustomDateTimeFormat.dateFormatter),
+                    new Time(rs.getLong(4))
+            );
 
     public ReservationDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -63,14 +70,14 @@ public class ReservationDao {
 
         String query = "SELECT r.id as reservation_id, r.name, r.date, t.id as time_id, t.time as time_value FROM reservation as r inner join time as t on r.time_id = t.id";
 
-        return jdbcTemplate.query(query, reservationRowMapper);
+        return jdbcTemplate.query(query, reservationTimeRowMapper);
     }
 
     public Reservation findById(Long id) {
         String query = "SELECT * FROM RESERVATION WHERE id = ?";
 
         try {
-            return jdbcTemplate.queryForObject(query, reservationRowMapper, id);
+            return jdbcTemplate.queryForObject(query, reservationTimeRowMapper, id);
         } catch (EmptyResultDataAccessException e) {
             return null;
         }
@@ -83,5 +90,10 @@ public class ReservationDao {
         if (count == 0) {
             throw new EntityNotFoundException("해당 id의 예약은 존재하지 않습니다");
         }
+    }
+
+    public List<Reservation> findByTimeId(Long timeId) {
+        String query = "SELECT * FROM RESERVATION WHERE time_id = ?";
+        return jdbcTemplate.query(query, reservationRowMapper, timeId);
     }
 }

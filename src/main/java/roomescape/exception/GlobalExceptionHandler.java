@@ -1,6 +1,7 @@
 package roomescape.exception;
 
 import org.slf4j.Logger;
+import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -28,6 +29,13 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(EntityAlreadyExistException.class)
     public ResponseEntity<String> handleIllegalArgumentException(EntityAlreadyExistException e) {
+        logger.error(e.getMessage());
+        logger.error(e.getClass().getName());
+        return ResponseEntity.badRequest().body(e.getMessage());
+    }
+
+    @ExceptionHandler(TypeMismatchException.class)
+    public ResponseEntity<String> handleIllegalArgumentException(TypeMismatchException e) {
         logger.error(e.getMessage());
         logger.error(e.getClass().getName());
         return ResponseEntity.badRequest().body(e.getMessage());
