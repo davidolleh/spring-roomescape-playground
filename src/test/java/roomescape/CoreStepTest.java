@@ -42,7 +42,7 @@ public class CoreStepTest {
                 .body("size()", is(3));
 
         RestAssured.given().log().all()
-                .when().delete("/times/1")
+                .when().delete("/times/3")
                 .then().log().all()
                 .statusCode(204);
     }
