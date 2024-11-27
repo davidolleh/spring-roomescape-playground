@@ -48,14 +48,20 @@ public class MissionStepTest {
 
     @Nested
     class 삼단계 {
-        ReservationRequestDto requestBody = new ReservationRequestDto(
-                "hwang",
-                "2024-11-06",
-                "10:11"
-        );
+        Map<String, String> requestBody = new HashMap<>();
+//                "hwang",
+//                "2024-11-06",
+//                "10:11"
+
 
         @Test
         void 예약_추가_요청() {
+            requestBody.put("name", "hwang");
+            requestBody.put("date", "2024-11-06");
+            requestBody.put("time_id", "1");
+            requestBody.put("time", "10:11");
+
+
             RestAssured.given().log().all()
                     .contentType(ContentType.JSON)
                     .body(requestBody)
