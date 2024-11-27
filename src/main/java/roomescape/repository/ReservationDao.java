@@ -1,5 +1,6 @@
 package roomescape.repository;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -9,7 +10,6 @@ import org.springframework.stereotype.Repository;
 import roomescape.entity.Person;
 import roomescape.entity.Reservation;
 import roomescape.exception.EntityNotFoundException;
-import roomescape.service.ReservationRepository;
 import roomescape.util.CustomDateTimeFormat;
 
 import java.sql.PreparedStatement;
@@ -18,8 +18,9 @@ import java.time.LocalTime;
 import java.util.List;
 
 @Repository
-public class JDBCReservationDao implements ReservationRepository {
+public class ReservationDao {
 
+    @Autowired
     private final JdbcTemplate jdbcTemplate;
     private final RowMapper<Reservation> reservationRowMapper = (rs, rowNum) -> new Reservation(
             rs.getLong("id"),
@@ -28,11 +29,10 @@ public class JDBCReservationDao implements ReservationRepository {
             LocalTime.parse(rs.getString("time"), CustomDateTimeFormat.timeFormatter)
     );
 
-    public JDBCReservationDao(JdbcTemplate jdbcTemplate) {
+    public ReservationDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    @Override
     public Reservation save(Reservation reservation) {
         String query = "INSERT INTO RESERVATION (name, date, time) VALUES (?, ?, ?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -57,14 +57,12 @@ public class JDBCReservationDao implements ReservationRepository {
         );
     }
 
-    @Override
     public List<Reservation> findAll() {
         String query = "SELECT * FROM RESERVATION";
 
         return jdbcTemplate.query(query, reservationRowMapper);
     }
 
-    @Override
     public Reservation findById(Long id) {
         String query = "SELECT * FROM RESERVATION WHERE id = ?";
 
@@ -75,7 +73,6 @@ public class JDBCReservationDao implements ReservationRepository {
         }
     }
 
-    @Override
     public void deleteById(Long id) {
         String query = "delete from RESERVATION where id = ?";
         int count = jdbcTemplate.update(query, id);
