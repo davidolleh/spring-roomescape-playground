@@ -8,7 +8,6 @@ import roomescape.entity.Time;
 import roomescape.util.CustomDateTimeFormat;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 
 public record ReservationRequestDto(
         @NotBlank

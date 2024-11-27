@@ -79,7 +79,7 @@ public class ReservationDao {
         try {
             return jdbcTemplate.queryForObject(query, reservationTimeRowMapper, id);
         } catch (EmptyResultDataAccessException e) {
-            return null;
+            throw new EntityNotFoundException("해당 예약은 존재하지 않습니다.");
         }
     }
 
