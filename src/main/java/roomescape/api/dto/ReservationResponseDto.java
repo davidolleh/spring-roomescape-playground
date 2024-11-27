@@ -17,7 +17,7 @@ public record ReservationResponseDto(
                 reservation.getId(),
                 reservation.getPerson().getName(),
                 reservation.getDate().format(CustomDateTimeFormat.dateFormatter),
-                reservation.getTime().format(CustomDateTimeFormat.timeFormatter)
+                reservation.getLocalTime().format(CustomDateTimeFormat.timeFormatter)
         );
     }
 }
