@@ -37,16 +37,4 @@ public class ReservationService {
     public void deleteReservation(Long id) {
         reservationDao.deleteById(id);
     }
-
-    public List<Time> readReservationTimes() {
-        return timeDao.findAll();
-    }
-
-    public Time createReservationTime(roomescape.entity.Time reservationTime) {
-        return timeDao.save(reservationTime);
-    }
-
-    public void deleteReservationTime(Long id) {
-        timeDao.delete(id);
-    }
 }

@@ -85,7 +85,7 @@ public class ReservationDao {
         int count = jdbcTemplate.update(query, id);
 
         if (count == 0) {
-            throw new EntityNotFoundException("해당 예약은 존재하지 않스빈다");
+            throw new EntityNotFoundException("해당 id의 예약은 존재하지 않습니다");
         }
     }
 }
