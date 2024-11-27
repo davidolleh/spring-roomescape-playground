@@ -22,32 +22,34 @@ public class InMemoryReservationRepositoryImpl implements ReservationRepository 
     }
 
     private Map<Long, Reservation> initialReservationsSetting() {
-        Person person = new Person("brown");
-        Reservation reservation1 = new Reservation(
-                id.getAndIncrement(),
-                person,
-                LocalDate.of(2023,1,1),
-                LocalTime.of(10, 0,0)
-        );
-        Reservation reservation2 = new Reservation(
-                id.getAndIncrement(),
-                person,
-                LocalDate.of(2023,1,2),
-                LocalTime.of(11, 0,0)
-        );
-        Reservation reservation3 = new Reservation(
-                id.getAndIncrement(),
-                person,
-                LocalDate.of(2023,1,3),
-                LocalTime.of(12, 0,0)
-        );
+//        Person person = new Person("brown");
+//        Reservation reservation1 = new Reservation(
+//                id.getAndIncrement(),
+//                person,
+//                LocalDate.of(2023,1,1),
+//                LocalTime.of(10, 0,0)
+//        );
+//        Reservation reservation2 = new Reservation(
+//                id.getAndIncrement(),
+//                person,
+//                LocalDate.of(2023,1,2),
+//                LocalTime.of(11, 0,0)
+//        );
+//        Reservation reservation3 = new Reservation(
+//                id.getAndIncrement(),
+//                person,
+//                LocalDate.of(2023,1,3),
+//                LocalTime.of(12, 0,0)
+//        );
+//
+//
+//        return new HashMap<Long, Reservation>() {{
+//            put(reservation1.getId(), reservation1);
+//            put(reservation2.getId(), reservation2);
+//            put(reservation3.getId(), reservation3);
+//        }};
 
-
-        return new HashMap<Long, Reservation>() {{
-            put(reservation1.getId(), reservation1);
-            put(reservation2.getId(), reservation2);
-            put(reservation3.getId(), reservation3);
-        }};
+        return null;
     }
 
     @Override
