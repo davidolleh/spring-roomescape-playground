@@ -1,7 +1,6 @@
 package roomescape.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import roomescape.entity.Reservation;
 import roomescape.entity.Time;
@@ -12,31 +11,33 @@ import java.util.List;
 
 @Service
 public class ReservationService {
-    private final ReservationDao reservationRepository;
+    private final ReservationDao reservationDao;
     private final TimeDao reservationTimeDao;
+    private final TimeDao timeDao;
 
     public ReservationService(
             @Autowired ReservationDao reservationRepository,
-            @Autowired TimeDao reservationTimeDao
-    ) {
-        this.reservationRepository = reservationRepository;
+            @Autowired TimeDao reservationTimeDao,
+            TimeDao timeDao) {
+        this.reservationDao = reservationRepository;
         this.reservationTimeDao = reservationTimeDao;
+        this.timeDao = timeDao;
     }
 
     public List<Reservation> readReservations() {
-        return reservationRepository.findAll();
+        return reservationDao.findAll();
     }
 
     public Reservation readReservation(Long id) {
-        return reservationRepository.findById(id);
+        return reservationDao.findById(id);
     }
 
     public Reservation createReservation(Reservation reservation) {
-        return reservationRepository.save(reservation);
+        return reservationDao.save(reservation);
     }
 
     public void deleteReservation(Long id) {
-        reservationRepository.deleteById(id);
+        reservationDao.deleteById(id);
     }
 
     public List<Time> readReservationTimes() {
