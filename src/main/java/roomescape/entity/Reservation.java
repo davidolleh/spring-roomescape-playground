@@ -31,6 +31,10 @@ public class Reservation {
         return person;
     }
 
+    public String getPersonName() {
+        return person.getName();
+    }
+
     public LocalDate getDate() {
         return date;
     }
