@@ -25,7 +25,7 @@ public class CoreStepTest {
     @Test
     void 팔단계() {
         Map<String, String> params = new HashMap<>();
-        params.put("time", "10:00");
+        params.put("time", "14:00");
 
         RestAssured.given().log().all()
                 .contentType(ContentType.JSON)
