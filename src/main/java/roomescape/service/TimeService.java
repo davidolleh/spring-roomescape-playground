@@ -36,6 +36,7 @@ public class TimeService {
         if (!reservations.isEmpty()) {
             throw new TimeDeleteException("해당 시간 id의 예약이 존재합니다");
         }
+        
         timeDao.delete(id);
     }
 }
