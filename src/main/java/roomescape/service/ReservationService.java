@@ -4,10 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import roomescape.entity.Reservation;
 import roomescape.entity.Time;
+import roomescape.exception.EntityAlreadyExistException;
 import roomescape.repository.ReservationDao;
 import roomescape.repository.TimeDao;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ReservationService {
@@ -31,6 +33,11 @@ public class ReservationService {
     }
 
     public Reservation createReservation(Reservation reservation) {
+        Optional<Reservation> existReservation = reservationDao.findByDateAndTime(reservation.getDate(), reservation.getTimeId());
+        if (existReservation.isPresent()) {
+            throw new EntityAlreadyExistException("해당 날짜와 시간의 예약이 이미 존재합니다");
+        }
+
         Time time = timeDao.findById(reservation.getTimeId());
 
         Reservation reservationWithTimeInfo = new Reservation(

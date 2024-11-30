@@ -17,6 +17,7 @@ import java.sql.PreparedStatement;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class ReservationDao {
@@ -67,7 +68,6 @@ public class ReservationDao {
     }
 
     public List<Reservation> findAll() {
-
         String query = "SELECT r.id as reservation_id, r.name, r.date, t.id as time_id, t.time as time_value FROM reservation as r inner join time as t on r.time_id = t.id";
 
         return jdbcTemplate.query(query, reservationTimeRowMapper);
@@ -95,5 +95,16 @@ public class ReservationDao {
     public List<Reservation> findByTimeId(Long timeId) {
         String query = "SELECT * FROM RESERVATION WHERE time_id = ?";
         return jdbcTemplate.query(query, reservationRowMapper, timeId);
+    }
+
+    public Optional<Reservation> findByDateAndTime(LocalDate date, Long timeId) {
+        try {
+            String query = "SELECT * FROM RESERVATION WHERE date = ? AND time_id = ?";
+
+            return Optional.ofNullable(jdbcTemplate.queryForObject(query, reservationRowMapper, date, timeId));
+        } catch (EmptyResultDataAccessException e) {
+            return Optional.empty();
+        }
+
     }
 }

@@ -22,41 +22,49 @@ public class ReservationRepositoryImpl implements ReservationRepository {
 
     private Map<Long, Reservation> initialReservationsSetting() {
         Person person = new Person("brown");
-        Reservation reservation1 = new Reservation(
-                id.getAndIncrement(),
-                person,
-                LocalDate.of(2023,1,1),
-                LocalTime.of(10, 0,0)
-        );
-        Reservation reservation2 = new Reservation(
-                id.getAndIncrement(),
-                person,
-                LocalDate.of(2023,1,2),
-                LocalTime.of(11, 0,0)
-        );
-        Reservation reservation3 = new Reservation(
-                id.getAndIncrement(),
-                person,
-                LocalDate.of(2023,1,3),
-                LocalTime.of(12, 0,0)
-        );
+//        Reservation reservation1 = new Reservation(
+//                id.getAndIncrement(),
+//                person,
+//                LocalDate.of(2023,1,1),
+//                LocalTime.of(10, 0,0)
+//        );
+//        Reservation reservation2 = new Reservation(
+//                id.getAndIncrement(),
+//                person,
+//                LocalDate.of(2023,1,2),
+//                LocalTime.of(11, 0,0)
+//        );
+//        Reservation reservation3 = new Reservation(
+//                id.getAndIncrement(),
+//                person,
+//                LocalDate.of(2023,1,3),
+//                LocalTime.of(12, 0,0)
+//        );
 
 
-        return new HashMap<>() {{
-            put(reservation1.getId(), reservation1);
-            put(reservation2.getId(), reservation2);
-            put(reservation3.getId(), reservation3);
-        }};
+        return new HashMap<>();
+//        return new HashMap<>() {{
+//            put(reservation1.getId(), reservation1);
+//            put(reservation2.getId(), reservation2);
+//            put(reservation3.getId(), reservation3);
+//        }};
     }
 
     @Override
     public Reservation save(Reservation reservation) {
         Long newId = id.getAndIncrement();
 
-        reservation.setId(newId);
+//        reservation.setId(newId);
         reservations.put(newId, reservation);
 
-        return reservation;
+        return new Reservation(
+                newId,
+                reservation.getPerson(),
+                reservation.getDate(),
+                reservation.getTime()
+        );
+
+//        return reservation;
     }
 
     @Override
