@@ -2,18 +2,20 @@ package roomescape.exception;
 
 import org.slf4j.Logger;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.context.request.WebRequest;
 import roomescape.util.LoggerUtils;
+
+import java.util.stream.Collectors;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
     private final Logger logger = LoggerUtils.logger(GlobalExceptionHandler.class);
 
     @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException e) {
+    public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException e, WebRequest request) {
         logger.info(e.getMessage());
         return ResponseEntity.badRequest().body(e.getMessage());
     }
@@ -26,14 +28,14 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<String> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
-        logger.info(e.getMessage());
-        return ResponseEntity.badRequest().body(e.getMessage());
-    }
+        String errorFields = e.getBindingResult().
+                getFieldErrors()
+                .stream()
+                .map(fieldError -> fieldError.getField() + ": " + fieldError.getDefaultMessage())
+                .collect(Collectors.joining(", "));
 
-    @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<String> handleHttpMessageNotReadableException(HttpMessageNotReadableException e) {
-        logger.error(e.getMessage());
-        return ResponseEntity.badRequest().body(e.getMessage());
+        logger.info(errorFields);
+        return ResponseEntity.badRequest().body(errorFields);
     }
 
     @ExceptionHandler(BusinessException.class)

@@ -81,7 +81,7 @@ public class JDBCReservationDao implements ReservationRepository {
         int count = jdbcTemplate.update(query, id);
 
         if (count == 0) {
-            throw new EntityNotFoundException("해당 예약은 존재하지 않습니다");
+            throw new EntityNotFoundException("해당 " + id + " 예약은 존재하지 않습니다");
         }
     }
 }
