@@ -37,7 +37,7 @@ public class JDBCStepTest {
     public static void setup(@Autowired DataSource dataSource) {
         try (Connection conn = dataSource.getConnection()) {
 
-            ScriptUtils.executeSqlScript(conn, new ClassPathResource("/schema.sql"));
+            ScriptUtils.executeSqlScript(conn, new ClassPathResource("/DB/schema.sql"));
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
