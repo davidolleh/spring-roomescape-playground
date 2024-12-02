@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import roomescape.util.LoggerUtils;
@@ -14,13 +15,19 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException e) {
-        logger.error(e.getMessage());
+        logger.info(e.getMessage());
         return ResponseEntity.badRequest().body(e.getMessage());
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<String> handleIllegalArgumentException(EntityNotFoundException e) {
-        logger.error(e.getMessage());
+    public ResponseEntity<String> handleExceptionNotFoundException(EntityNotFoundException e) {
+        logger.info(e.getMessage());
+        return ResponseEntity.badRequest().body(e.getMessage());
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<String> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+        logger.info(e.getMessage());
         return ResponseEntity.badRequest().body(e.getMessage());
     }
 
@@ -32,7 +39,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(BusinessException.class)
     public ResponseEntity<String> handleBusinessException(BusinessException e) {
-        logger.error(e.getMessage());
+        logger.warn(e.getMessage());
         return ResponseEntity.internalServerError().body(e.getMessage());
     }
 
