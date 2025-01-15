@@ -67,10 +67,14 @@ public class ReservationDao {
     }
 
     public List<Reservation> findAll() {
-
         String query = "SELECT r.id as reservation_id, r.name, r.date, t.id as time_id, t.time as time_value FROM reservation as r inner join time as t on r.time_id = t.id";
 
         return jdbcTemplate.query(query, reservationTimeRowMapper);
+    }
+
+    public List<Reservation> findByDate(LocalDate date) {
+        String query = "SELECT r.id as reservation_id, r.name, r.date, t.id as time_id, t.time as time_value FROM reservation as r inner join time as t on r.time_id = t.id where r.date = ?";
+        return jdbcTemplate.query(query, reservationTimeRowMapper, date.format(CustomDateTimeFormat.dateFormatter));
     }
 
     public Reservation findById(Long id) {
