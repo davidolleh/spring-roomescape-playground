@@ -33,13 +33,13 @@ public class CoreStepTest {
                 .when().post("/times")
                 .then().log().all()
                 .statusCode(201)
-                .header("Location", "/times/3");
+                .header("Location", "/times/6");
 
         RestAssured.given().log().all()
                 .when().get("/times")
                 .then().log().all()
                 .statusCode(200)
-                .body("size()", is(3));
+                .body("size()", is(6));
 
         RestAssured.given().log().all()
                 .when().delete("/times/3")
@@ -51,7 +51,7 @@ public class CoreStepTest {
     void 구단계() {
         Map<String, String> reservation = new HashMap<>();
         reservation.put("name", "브라운");
-        reservation.put("date", "2023-08-05");
+        reservation.put("date", "2025-10-27");
         reservation.put("time", "10:00");
 
         RestAssured.given().log().all()
