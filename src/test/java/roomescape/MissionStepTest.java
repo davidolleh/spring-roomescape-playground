@@ -6,9 +6,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
-import roomescape.api.dto.ReservationRequestDto;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import static org.hamcrest.core.Is.is;
@@ -48,17 +46,17 @@ public class MissionStepTest {
 
     @Nested
     class 삼단계 {
-        ReservationRequestDto requestBody = new ReservationRequestDto(
-                "hwang",
-                "2024-11-06",
-                "10:11"
+        Map<String, String> params = Map.of(
+                "name", "브라운",
+                "date", "2023-08-05",
+                "time", "15:40"
         );
 
         @Test
         void 예약_추가_요청() {
             RestAssured.given().log().all()
                     .contentType(ContentType.JSON)
-                    .body(requestBody)
+                    .body(params)
                     .when().post("/reservations")
                     .then().log().all()
                     .statusCode(201)
@@ -101,10 +99,12 @@ public class MissionStepTest {
 
         @Test
         void 예약_요청_인자_테스트() {
-            Map<String, String> requestBody = new HashMap<>();
-            requestBody.put("name", "hwang");
-            requestBody.put("date", "");
-            requestBody.put("time", "");
+            Map<String, String> requestBody = Map.of(
+                    "name", "브라운",
+                    "date", "",
+                    "time", ""
+            );
+
 
             RestAssured.given().log().all()
                     .contentType(ContentType.JSON)
