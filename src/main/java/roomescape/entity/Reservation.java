@@ -2,23 +2,22 @@ package roomescape.entity;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Objects;
 
 public class Reservation {
     private Long id;
-    private Person person;
+    private String name;
     private LocalDate date;
     private LocalTime time;
 
-    public Reservation(Long id, Person person, LocalDate date, LocalTime time) {
+    public Reservation(Long id, String name, LocalDate date, LocalTime time) {
         this.id = id;
-        this.person = person;
+        this.name = name;
         this.date = date;
         this.time = time;
     }
-    public Reservation(Person person, LocalDate date, LocalTime time) {
+    public Reservation(String name, LocalDate date, LocalTime time) {
         this.id = 0L;
-        this.person = person;
+        this.name = name;
         this.date = date;
         this.time = time;
     }
@@ -27,8 +26,8 @@ public class Reservation {
         return id;
     }
 
-    public Person getPerson() {
-        return person;
+    public String getName() {
+        return name;
     }
 
     public LocalDate getDate() {
@@ -37,18 +36,5 @@ public class Reservation {
 
     public LocalTime getTime() {
         return time;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Reservation that = (Reservation) o;
-        return Objects.equals(id, that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(id);
     }
 }

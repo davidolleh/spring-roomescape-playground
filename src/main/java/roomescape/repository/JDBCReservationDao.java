@@ -6,7 +6,6 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-import roomescape.entity.Person;
 import roomescape.entity.Reservation;
 import roomescape.exception.EntityNotFoundException;
 import roomescape.service.ReservationRepository;
@@ -23,7 +22,7 @@ public class JDBCReservationDao implements ReservationRepository {
     private final JdbcTemplate jdbcTemplate;
     private final RowMapper<Reservation> reservationRowMapper = (rs, rowNum) -> new Reservation(
             rs.getLong("id"),
-            new Person(rs.getString("name")),
+            rs.getString("name"),
             LocalDate.parse(rs.getString("date"), CustomDateTimeFormat.dateFormatter),
             LocalTime.parse(rs.getString("time"), CustomDateTimeFormat.timeFormatter)
     );
@@ -41,7 +40,7 @@ public class JDBCReservationDao implements ReservationRepository {
             PreparedStatement ps = connection.prepareStatement(
                     query,
                     new String[]{"id"});
-            ps.setString(1, reservation.getPerson().getName());
+            ps.setString(1, reservation.getName());
             ps.setString(2, reservation.getDate().format(CustomDateTimeFormat.dateFormatter));
             ps.setString(3, reservation.getTime().format(CustomDateTimeFormat.timeFormatter));
             return ps;
@@ -51,7 +50,7 @@ public class JDBCReservationDao implements ReservationRepository {
 
         return new Reservation(
                 id,
-                reservation.getPerson(),
+                reservation.getName(),
                 reservation.getDate(),
                 reservation.getTime()
         );

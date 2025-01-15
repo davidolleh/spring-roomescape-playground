@@ -2,7 +2,6 @@ package roomescape.api.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import roomescape.entity.Person;
 import roomescape.entity.Reservation;
 import roomescape.util.CustomDateTimeFormat;
 
@@ -22,7 +21,7 @@ public record ReservationRequestDto(
 ) {
     public Reservation toEntity() {
         return new Reservation(
-            new Person(this.name),
+            this.name,
             LocalDate.parse(date, CustomDateTimeFormat.dateFormatter),
             LocalTime.parse(time, CustomDateTimeFormat.timeFormatter)
         );
