@@ -1,8 +1,6 @@
 package roomescape.api.dto;
 import roomescape.entity.Reservation;
-import roomescape.util.DateTimeFormat;
-
-import java.time.format.DateTimeFormatter;
+import roomescape.util.CustomDateTimeFormat;
 
 public record ReservationResponseDto(
         Long id,
@@ -11,11 +9,15 @@ public record ReservationResponseDto(
         String time
 ) {
     public static ReservationResponseDto fromEntity(Reservation reservation) {
+        if (reservation == null) {
+            return null;
+        }
+
         return new ReservationResponseDto(
                 reservation.getId(),
-                reservation.getPerson().getName(),
-                reservation.getDate().format(DateTimeFormatter.ofPattern(DateTimeFormat.dateFormat)),
-                reservation.getTime().format(DateTimeFormatter.ofPattern(DateTimeFormat.timeFormat))
+                reservation.getName(),
+                reservation.getDate().format(CustomDateTimeFormat.dateFormatter),
+                reservation.getTime().format(CustomDateTimeFormat.timeFormatter)
         );
     }
 }

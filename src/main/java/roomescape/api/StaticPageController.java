@@ -10,6 +10,7 @@ public class StaticPageController {
         return "home";
     }
 
+
     @GetMapping("/reservation")
     public String reservationPage() {
         return "reservation";
